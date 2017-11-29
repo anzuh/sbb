@@ -5,13 +5,15 @@
 # Version: 1.0.0
 
 # CONFIG #
-# Change this to whatever path fits your usage. Don't put the trailing space here.
+# Change this to whatever path fits your usage. Don't put the trailing slash here.
 path="/srv/http/sbb"
 
 # SCRIPT
 
+markdown -v >/dev/null 2>&1 || {echo >&2 "This script requires that markdown be installed."; exit 1}
+
 if ! [ -d $path/posts/ ]; then
-	mkdir $path/posts
+	mkdir -p $path/posts
 fi
 
 if [ -z $EDITOR ]; then

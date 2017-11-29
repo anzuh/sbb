@@ -14,9 +14,11 @@ pre {
 }
 
 blockquote {
+	box-sizing: border-box;
 	color: gray;
 	border-left: 1px solid grey;
-	padding: 5px 20px;
+	padding: 1px 20px;
+	margin-left: 0;
 }
 
 a {
@@ -29,4 +31,10 @@ a {
 a:hover {
 	color: gray;
 	border-bottom: 1px dotted gray;
+}
+
+p>code {
+	background-color: black;
+	color: white;
+	padding: 2px;
 }
