@@ -91,12 +91,14 @@ fi
 
 if ! [ -e $config/config ]; then
 	createConfig
+	echo "Config file created at $config/config! Remember to change your path to something sensible."
+	exit 1
 fi
 
 source $config/config
 
 if ! [ -d $path/posts ]; then
-	mkdir -p $path/posts
+	mkdir -p $path/posts >/dev/null 2>&1 || { echo >&2 "Failed to create posts folder. Is your config file setup?"; exit 1; }
 fi
 
 if ! [[ -n $EDITOR ]]; then
