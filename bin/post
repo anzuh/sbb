@@ -108,7 +108,6 @@ if [ ! -e $path/index.html ]; then
 	createIndexFile
 fi
 
-postdate=$(date "+%Y-%m")
 index=$(find $path/posts | wc)
 
 createTitle || exit
