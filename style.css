@@ -1,0 +1,30 @@
+body {
+	max-width: 720px;
+	padding: 100px 10px;
+    margin: auto;
+    font-family: sans;
+}
+
+pre {
+	overflow: auto;
+	padding: 30px;
+	background-color: black;
+	color: white;
+}
+
+blockquote {
+	border-left: 1px solid black;
+	padding-left: 15px;
+}
+
+a {
+	color: dimgray;
+	text-decoration: none;
+	font-style: italic;
+	border-bottom: 1px dotted dimgray;
+}
+
+a:hover {
+	color: gray;
+	border-bottom: 1px dotted gray;
+}

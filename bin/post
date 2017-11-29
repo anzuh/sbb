@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# Author: anzu
+# Description: A simple blogging system made in bash. This is the main script that does most of the work.
+# Version: 1.0.0
+
+# CONFIG #
+# Change this to whatever path fits your usage. Don't put the trailing space here.
+path="/srv/http/sbb"
+
+# SCRIPT
+
+if ! [ -d $path/posts/ ]; then
+	mkdir $path/posts
+fi
+
+postdate=$(date "+%Y-%m")
+index=$(ls $path/posts | wc)
+
+createTitle() {
+	echo -n "Enter post-title: "
+	read -r title
+	if [ -z "$title" ]; then
+		echo "Title can't be empty. Aborting."
+		exit
+	fi
+	createIndex
+}
+
+createIndex() {
+	count=$(ls $path/posts/ | wc -l)
+	index=$(printf "0x%04x\n" $count)
+	createFileName
+}
+
+createFileName() {
+	filename=$(echo -n "$title" | tr -d '!"@£$#¤%&/()=?.,^*<>-' | tr "[:upper:] " "[:lower:]-")
+}
+
+# This function creates the <head> part of the post html.
+createHeader() {
+	echo "<html>"
+	echo "<head>"
+	echo "<title>$title</title>"
+	echo "<link rel='stylesheet' type='text/css' href='../style.css'/>"
+	echo "</head>"
+	echo "<body>"
+} > $path/$filename
+
+# This function creates the footer of the post html.
+createFooter() {
+	echo "</body>"
+	echo "</html>"
+} >> $path/$filename
+
+# This function calls $EDITOR to write a blog post.
+createPost() {
+	$EDITOR $path/tmpfile
+	if [ -s $path/tmpfile ]; then
+		markdown $path/tmpfile
+	fi
+} >> $path/$filename
+
+updatePostList() {
+	link=$(echo "[$index - $title](posts/${filename}.html)" | markdown)
+	sed -i "8a ${link}" $path/index.html
+}
+
+createTitle
+createIndex
+createHeader
+createPost
+createFooter
+
+mv $path/$filename $path/posts/${filename}.html
+rm $path/tmpfile
+
+updatePostList
