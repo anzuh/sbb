@@ -28,3 +28,5 @@ of your blog post using markdown. When done, save and close.
 
 Currently, to edit blog posts, you'll have to change the HTML itself.
 Might be changed in the future, but it's not my priority to implement yet.
+
+	This is just a test.

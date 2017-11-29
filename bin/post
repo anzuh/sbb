@@ -14,6 +14,10 @@ if ! [ -d $path/posts/ ]; then
 	mkdir $path/posts
 fi
 
+if [ -z $EDITOR ]; then
+	EDITOR=nano
+fi
+
 postdate=$(date "+%Y-%m")
 index=$(ls $path/posts | wc)
 
@@ -24,13 +28,11 @@ createTitle() {
 		echo "Title can't be empty. Aborting."
 		exit
 	fi
-	createIndex
 }
 
 createIndex() {
 	count=$(ls $path/posts/ | wc -l)
 	index=$(printf "0x%04x\n" $count)
-	createFileName
 }
 
 createFileName() {
@@ -58,6 +60,9 @@ createPost() {
 	$EDITOR $path/tmpfile
 	if [ -s $path/tmpfile ]; then
 		markdown $path/tmpfile
+	else
+		echo "Post content empty!"
+		exit 1
 	fi
 } >> $path/$filename
 
@@ -66,13 +71,19 @@ updatePostList() {
 	sed -i "8a ${link}" $path/index.html
 }
 
+cleanup() {
+	mv $path/$filename $path/posts/${filename}.html
+	rm $path/tmpfile
+}
+
 createTitle
 createIndex
+createFileName
+
 createHeader
-createPost
+createPost || exit
 createFooter
 
-mv $path/$filename $path/posts/${filename}.html
-rm $path/tmpfile
-
 updatePostList
+
+cleanup

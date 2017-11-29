@@ -13,8 +13,9 @@ pre {
 }
 
 blockquote {
-	border-left: 1px solid black;
-	padding-left: 15px;
+	color: gray;
+	border-left: 1px solid grey;
+	padding: 10p 30pxx;
 }
 
 a {
