@@ -26,7 +26,7 @@ createTitle() {
 	read -r title
 	if [ -z "$title" ]; then
 		echo "Title can't be empty. Aborting."
-		exit
+		exit 1
 	fi
 }
 
@@ -76,7 +76,7 @@ cleanup() {
 	rm $path/tmpfile
 }
 
-createTitle
+createTitle || exit
 createIndex
 createFileName
 
