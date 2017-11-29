@@ -10,7 +10,11 @@ path="/srv/http/sbb"
 
 # SCRIPT
 
-markdown -v >/dev/null 2>&1 || {echo >&2 "This script requires that markdown be installed."; exit 1}
+markdown -v >/dev/null 2>&1 || { echo >&2 "This script requires that markdown be installed."; exit 1; }
+
+createIndexFile() {
+	echo "<html>"
+}
 
 if ! [ -d $path/posts/ ]; then
 	mkdir -p $path/posts
@@ -32,7 +36,7 @@ createTitle() {
 	fi
 }
 
-createIndex() {
+createBlogIndex() {
 	count=$(ls $path/posts/ | wc -l)
 	index=$(printf "0x%04x\n" $count)
 }
@@ -79,7 +83,7 @@ cleanup() {
 }
 
 createTitle || exit
-createIndex
+createBlogIndex
 createFileName
 
 createHeader
