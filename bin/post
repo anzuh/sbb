@@ -1,31 +1,23 @@
 #!/bin/bash
 
-# Author: anzu
-# Description: A simple blogging system made in bash. This is the main script that does most of the work.
-# Version: 1.0.0
-
-# CONFIG #
-# Change this to whatever path fits your usage. Don't put the trailing slash here.
-path="/srv/http/sbb"
-
-# SCRIPT
-
-markdown -v >/dev/null 2>&1 || { echo >&2 "This script requires that markdown be installed."; exit 1; }
+createConfig() {
+	echo '# path to blog files'
+	echo 'path="/srv/http/sbb"'
+} > $config/config
 
 createIndexFile() {
 	echo "<html>"
-}
-
-if ! [ -d $path/posts/ ]; then
-	mkdir -p $path/posts
-fi
-
-if [ -z $EDITOR ]; then
-	EDITOR=nano
-fi
-
-postdate=$(date "+%Y-%m")
-index=$(ls $path/posts | wc)
+	echo "<head>"
+	echo "<title>My Blog</title>"
+	echo '<link rel="stylesheet" type="text/css" href="style.css"'
+	echo "</head>"
+	echo "<body>"
+	echo "<h1>My blog</h1>"
+	echo "<section>"
+	echo "</section>"
+	echo "</body>"
+	echo "</html>"
+} > $path/index.html
 
 createTitle() {
 	echo -n "Enter post-title: "
@@ -45,7 +37,6 @@ createFileName() {
 	filename=$(echo -n "$title" | tr -d '!"@£$#¤%&/()=?.,^*<>-' | tr "[:upper:] " "[:lower:]-")
 }
 
-# This function creates the <head> part of the post html.
 createHeader() {
 	echo "<html>"
 	echo "<head>"
@@ -55,13 +46,11 @@ createHeader() {
 	echo "<body>"
 } > $path/$filename
 
-# This function creates the footer of the post html.
 createFooter() {
 	echo "</body>"
 	echo "</html>"
 } >> $path/$filename
 
-# This function calls $EDITOR to write a blog post.
 createPost() {
 	$EDITOR $path/tmpfile
 	if [ -s $path/tmpfile ]; then
@@ -81,6 +70,46 @@ cleanup() {
 	mv $path/$filename $path/posts/${filename}.html
 	rm $path/tmpfile
 }
+
+################ FUNCTION END ################
+
+markdown -v >/dev/null 2>&1 || { echo >&2 "This script requires that markdown be installed."; exit 1; }
+
+if [[ -n $XDG_CONFIG_HOME ]]; then
+	if [ -d $XDG_CONFIG_HOME ] && [ -w $XDG_CONFIG_HOME ]; then
+		config=$XDG_CONFIG_HOME/sbb
+	else
+		config=$HOME/.config/sbb
+	fi
+else
+	config=$HOME/.config/sbb
+fi
+
+if ! [ -d $config/sbb ]; then
+	mkdir -p $config/sbb
+fi
+
+if ! [ -e $config/config ]; then
+	createConfig
+fi
+
+source $config/config
+
+if ! [ -d $path/posts ]; then
+	mkdir -p $path/posts
+fi
+
+if ! [[ -n $EDITOR ]]; then
+	nano -v >/dev/null 2>&1 || { echo >&2 "Fallback to nano failed! Fix your EDITOR."; exit 1; }
+	EDITOR=nano
+fi
+
+if [ ! -e $path/index.html ]; then
+	createIndexFile
+fi
+
+postdate=$(date "+%Y-%m")
+index=$(find $path/posts | wc)
 
 createTitle || exit
 createBlogIndex
