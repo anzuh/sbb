@@ -38,3 +38,11 @@ p>code {
 	color: white;
 	padding: 2px;
 }
+
+ul {
+	list-style-type: disc;
+}
+
+ol {
+	list-style-type: decimal;
+}
