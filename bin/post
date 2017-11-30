@@ -6,9 +6,11 @@ createConfig() {
 } > $config/config
 
 createIndexFile() {
+	echo '<DOCTYPE html>'
 	echo "<html>"
 	echo "<head>"
 	echo "<title>My Blog</title>"
+	echo '<meta charset="UTF-8">'
 	echo '<link rel="stylesheet" type="text/css" href="style.css"'
 	echo "</head>"
 	echo "<body>"
@@ -63,7 +65,7 @@ createPost() {
 
 updatePostList() {
 	link=$(echo "[$index - $title](posts/${filename}.html)" | markdown)
-	sed -i "8a ${link}" $path/index.html
+	sed -i "10a ${link}" $path/index.html
 }
 
 cleanup() {
