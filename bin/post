@@ -6,7 +6,7 @@ createConfig() {
 } > $config/config
 
 createIndexFile() {
-	echo '<DOCTYPE html>'
+	echo '<!DOCTYPE html>'
 	echo "<html>"
 	echo "<head>"
 	echo "<title>My Blog</title>"
@@ -40,15 +40,18 @@ createFileName() {
 }
 
 createHeader() {
+	echo '<!DOCTYPE html>'
 	echo "<html>"
 	echo "<head>"
 	echo "<title>$title</title>"
+	echo '<meta charset="UTF-8">'
 	echo "<link rel='stylesheet' type='text/css' href='../style.css'/>"
 	echo "</head>"
 	echo "<body>"
 } > $path/$filename
 
 createFooter() {
+	echo '<center><a href="index.html">Home</a></center>'
 	echo "</body>"
 	echo "</html>"
 } >> $path/$filename
@@ -87,8 +90,8 @@ else
 	config=$HOME/.config/sbb
 fi
 
-if ! [ -d $config/sbb ]; then
-	mkdir -p $config/sbb
+if ! [ -d $config ]; then
+	mkdir -p $config
 fi
 
 if ! [ -e $config/config ]; then
@@ -104,7 +107,7 @@ if ! [ -d $path/posts ]; then
 fi
 
 if ! [[ -n $EDITOR ]]; then
-	nano -v >/dev/null 2>&1 || { echo >&2 "Fallback to nano failed! Fix your EDITOR."; exit 1; }
+	nano --version >/dev/null 2>&1 || { echo >&2 "Fallback to nano failed! Fix your EDITOR."; exit 1; }
 	EDITOR=nano
 fi
 
