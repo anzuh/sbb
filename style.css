@@ -1,3 +1,7 @@
+h1, h2 {
+	border-bottom: 1px dotted gray;
+}
+
 body {
 	max-width: 720px;
 	padding: 100px 10px;
@@ -36,13 +40,25 @@ a:hover {
 p>code {
 	background-color: black;
 	color: white;
-	padding: 2px;
+	padding: 2px 5px;
+	border-radius: 3px;
 }
 
 ul {
 	list-style-type: disc;
+	border-left: 1px solid gray;
 }
 
 ol {
 	list-style-type: decimal;
+}
+
+table, th, td {
+	border: 1px dotted gray;
+	border-collapse: collapse;
+	padding: 5px;
+}
+
+section {
+	border-bottom: 1px dotted gray;
 }
