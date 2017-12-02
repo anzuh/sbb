@@ -48,10 +48,14 @@ createHeader() {
 	echo "<link rel='stylesheet' type='text/css' href='../style.css'/>"
 	echo "</head>"
 	echo "<body>"
+	echo "<section>"
 } > $path/$filename
 
 createFooter() {
+	echo "</section>"
+	echo "<footer>"
 	echo '<center><a href="index.html">Home</a></center>'
+	echo "</footer>"
 	echo "</body>"
 	echo "</html>"
 } >> $path/$filename
