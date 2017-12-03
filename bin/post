@@ -15,6 +15,7 @@ createIndexFile() {
 	echo "</head>"
 	echo "<body>"
 	echo "<h1>My blog</h1>"
+	echo "<hr>"
 	echo "<section>"
 	echo "</section>"
 	echo "</body>"
@@ -48,13 +49,16 @@ createHeader() {
 	echo "<link rel='stylesheet' type='text/css' href='../style.css'/>"
 	echo "</head>"
 	echo "<body>"
+	echo "<h1>$title</h1>"
+	echo "<hr>"
 	echo "<section>"
 } > $path/$filename
 
 createFooter() {
 	echo "</section>"
+	echo "<hr>"
 	echo "<footer>"
-	echo '<center><a href="index.html">Home</a></center>'
+	echo '<center><a href="../index.html">Home</a></center>'
 	echo "</footer>"
 	echo "</body>"
 	echo "</html>"
@@ -72,7 +76,7 @@ createPost() {
 
 updatePostList() {
 	link=$(echo "[$index - $title](posts/${filename}.html)" | markdown)
-	sed -i "10a ${link}" $path/index.html
+	sed -i "11a ${link}" $path/index.html
 }
 
 cleanup() {

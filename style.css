@@ -1,12 +1,8 @@
-h1, h2 {
-	border-bottom: 1px dotted gray;
-}
-
 body {
 	max-width: 720px;
 	padding: 100px 10px;
     margin: auto;
-    font-family: sans;
+    font-family: sans, Arial;
 }
 
 pre {
@@ -14,7 +10,7 @@ pre {
 	padding: 30px;
 	background-color: black;
 	color: white;
-	border-radius: 3px;
+	border-radius: 5px;
 }
 
 blockquote {
@@ -40,8 +36,9 @@ a:hover {
 p>code {
 	background-color: black;
 	color: white;
-	padding: 2px 5px;
+	padding: 0.3em 0.5em;
 	border-radius: 3px;
+	white-space: nowrap;
 }
 
 ul {
@@ -51,14 +48,17 @@ ul {
 
 ol {
 	list-style-type: decimal;
+	border-left: 1px solid gray;
 }
 
-table, th, td {
-	border: 1px dotted gray;
-	border-collapse: collapse;
-	padding: 5px;
+img {
+	max-width: 720px;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px #000000;
 }
 
-section {
-	border-bottom: 1px dotted gray;
+hr {
+	margin: 1em 0;
+	border: 0;
+	border-top: 1px dashed gray;
 }
