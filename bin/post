@@ -86,7 +86,7 @@ cleanup() {
 
 ################ FUNCTION END ################
 
-markdown -v >/dev/null 2>&1 || { echo >&2 "This script requires that markdown be installed."; exit 1; }
+hash markdown >/dev/null 2>&1 || { echo >&2 "This script requires that markdown be installed."; exit 1; }
 
 if [[ -n $XDG_CONFIG_HOME ]]; then
 	if [ -d $XDG_CONFIG_HOME ] && [ -w $XDG_CONFIG_HOME ]; then
@@ -115,7 +115,7 @@ if ! [ -d $path/posts ]; then
 fi
 
 if ! [[ -n $EDITOR ]]; then
-	nano --version >/dev/null 2>&1 || { echo >&2 "Fallback to nano failed! Fix your EDITOR."; exit 1; }
+	hash nano >/dev/null 2>&1 || { echo >&2 "Fallback to nano failed! Fix your EDITOR."; exit 1; }
 	EDITOR=nano
 fi
 
