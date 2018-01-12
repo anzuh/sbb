@@ -65,9 +65,10 @@ createFooter() {
 } >> $path/$filename
 
 createPost() {
-	$EDITOR /tmp/tmpfile
-	if [ -s /tmp/tmpfile ]; then
-		markdown /tmp/tmpfile >> $path/$filename
+	tmpfile=$(mktemp)
+	$EDITOR $tmpfile
+	if [ -s $tmpfile ]; then
+		markdown $tmpfile >> $path/$filename
 	else
 		echo "Post content empty!"
 		exit 1
