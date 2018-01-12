@@ -65,14 +65,14 @@ createFooter() {
 } >> $path/$filename
 
 createPost() {
-	$EDITOR $path/tmpfile
-	if [ -s $path/tmpfile ]; then
-		markdown $path/tmpfile
+	$EDITOR /tmp/tmpfile
+	if [ -s /tmp/tmpfile ]; then
+		markdown /tmp/tmpfile >> $path/$filename
 	else
 		echo "Post content empty!"
 		exit 1
 	fi
-} >> $path/$filename
+} 
 
 updatePostList() {
 	link=$(echo "[$index - $title](posts/${filename}.html)" | markdown)
@@ -81,7 +81,6 @@ updatePostList() {
 
 cleanup() {
 	mv $path/$filename $path/posts/${filename}.html
-	rm $path/tmpfile
 }
 
 ################ FUNCTION END ################
@@ -114,7 +113,7 @@ if ! [ -d $path/posts ]; then
 	mkdir -p $path/posts >/dev/null 2>&1 || { echo >&2 "Failed to create posts folder. Is your config file setup?"; exit 1; }
 fi
 
-if ! [[ -n $EDITOR ]]; then
+if ! [[ -n "$EDITOR" ]]; then
 	hash nano >/dev/null 2>&1 || { echo >&2 "Fallback to nano failed! Fix your EDITOR."; exit 1; }
 	EDITOR=nano
 fi
